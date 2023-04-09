@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <!-- <script src='script.js'></script> -->
+  <body>
+     a : <input type="text" id="a"> <!--si on fait type text et on fait la multiplication apres avois saisi des nombres alors la conversion sera faite implicitement   -->
+     b : <input type="text" id="b"> <!--sinon si on veut faire l'addition alors il faut que le type soit number  -->
+     <INPUT TYPE="button" NAME="bouton" VALUE="Calculer" onClick="f()">
+    <script>
+      function f(){
+      var x=document.getElementById('a').value;
+      var y=document.getElementById('b').value;
+      alert("la surface du triangle est : "+(x*y))
+
+    }
+    </script>
+  </body>
+</html>

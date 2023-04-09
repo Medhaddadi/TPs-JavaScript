@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      function nbDiv(a){
+        var n=0;
+        for(let i=1;i<=a;i++){
+          if(a%i == 0){
+            n++;
+          }
+        }
+        return n;
+      }
+      console.log("les nbres premiers entre 1 et 100 sont :");
+      for(let i=0;i<=100;i++){
+        if(nbDiv(i)==2){
+          console.log(i)
+        }
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chronomètre</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type="text/css">
+        #container {
+            margin: auto;
+            width: 90%;
+            max-width: 300px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .minuteur {
+            border: 2px solid rgb(23, 10, 170);
+            border-radius: 5px;
+            padding: 5px 0;
+            text-align: center;
+            font-size: 1.5em;
+            font-family: digital;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: rgb(23, 10, 170);
+            color: #fff;
+            width: 30%;
+            max-width: 70px;
+            border-radius: 5px;
+            line-height: 1.7em;
+            border: none;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div class="minuteur">
+            <span id="heur">0 </span> h:
+            <span id="min">0 </span> min:
+            <span id="sec">0 </span>s :
+            <span id="msec">0 </span>ms
+        </div>
+        <button id="start" onclick="start()">Start</button>
+        <button id="stop" onclick="pause()">Pause</button>
+        <button id="reset" onclick="reset()">Reset</button>
+    </div>
+    <script src="exo2.js"></script>
+</body>
+
+</html>

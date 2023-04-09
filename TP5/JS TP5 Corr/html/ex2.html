@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        .remove-button {
+            position: absolute;
+            font-size: 110%;
+            color: rgb(15, 9, 104);
+            right: 10px;
+            display: block;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .pane {
+            background: rgb(188, 220, 242);
+            padding: 10px 20px 10px;
+            border-top: solid 2px rgb(98, 148, 190);
+            position: relative;
+            width: 500px;
+            margin: auto;
+        }
+
+        .close {
+            position: absolute;
+            right: 32px;
+            top: 32px;
+            width: 32px;
+            height: 32px;
+            opacity: 0.3;
+        }
+        .close:hover {
+            opacity: 1;
+        }
+        .close:before, .close:after {
+            position: absolute;
+            left: 15px;
+            content: ' ';
+            height: 33px;
+            width: 2px;
+            background-color: #333;
+        }
+        .close:before {
+            transform: rotate(45deg);
+        }
+        .close:after {
+            transform: rotate(-45deg);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="pane">
+            <h3>Cheval</h3>
+            <p>
+                Le cheval est l'une des deux sous-espèces existantes d'Equus ferus. C'est un mammifère ongulé à doigts
+                impairs appartenant à la famille taxonomique des Equidae. Le cheval a évolué au cours des 45 à 55
+                millions d'années passées, passant d'une petite créature à plusieurs doigts, Eohippus, au grand animal à
+                un seul doigt d'aujourd'hui.</p>
+        </div>
+        <div class="pane">
+            <h3>L'âne</h3>
+            <p>
+                L'âne (Equus africanus asinus) est un membre domestiqué de la famille des chevaux, les Equidae.
+                L'ancêtre sauvage de l'âne est l'âne sauvage africain, E. africanus. L'âne est utilisé comme animal de
+                travail depuis au moins 5000 ans.</p>
+        </div>
+        <div class="pane">
+            <h3>Chat</h3>
+            <p>Le chat domestique (latin : Felis catus) est un petit mammifère carnivore, généralement à fourrure. Il
+                est souvent appelé chat domestique lorsqu'il est gardé comme animal de compagnie à l'intérieur ou
+                simplement chat lorsqu'il n'est pas nécessaire de le distinguer des autres félidés et félines. Les chats
+                sont souvent appréciés par les humains pour leur compagnie et pour leur capacité à chasser la vermine.
+            </p>
+        </div>
+    </div>
+    <script>
+        let divs = document.querySelectorAll(".pane");
+
+let a = document.createElement("a");
+
+a.setAttribute("class", "close");
+
+for( let i = 0; i < divs.length; i++ ) {
+    a.setAttribute("id", "btn" + i);
+    divs[i].prepend(a.cloneNode(true));
+    let id = "btn" + i
+
+    document.getElementById(id).addEventListener("click", () => {divs[i].style.display = "none"})
+}
+    </script>
+</body>
+
+</html>

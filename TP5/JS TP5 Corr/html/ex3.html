@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <style>
+        body {
+            padding: 50px;
+        }
+
+        form,
+        #result {
+            margin: auto;
+            margin-bottom: 20px;
+            width: 300px;
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        span {
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form>
+        <div>
+            <input type="text" id="nameInput" placeholder="Nom" />
+        </div>
+        <div >
+            <select id="gender">
+                <option>Choisissez une valeur</option>
+                <option value="male">Homme</option>
+                <option value="female">Femme</option>
+                <option value="other">Autre</option>
+            </select>
+        </div>
+    </form>
+
+    <div id="result">
+        Nom : <span id="res-name"></span><br />
+        Genre : <span id="res-gender"></span><br />
+        Souris : (<span id="mouse-x"></span>, <span id="mouse-y"></span>)
+    </div>
+
+    <script>
+        
+gender.addEventListener("change", (event) => {retrieveElements(event)})
+
+function retrieveElements(event) {
+    let name = document.getElementById("nameInput").value;
+    let gender = document.getElementById("gender").value;
+
+    document.getElementById("res-name").innerText = name;
+    document.getElementById("res-gender").innerText = gender;
+}
+
+document.addEventListener("mousemove", (event) =>  {
+    document.getElementById("mouse-x").innerText = event.clientX;
+    document.getElementById("mouse-y").innerText = event.clientY;
+})
+    </script>
+</body>
+
+</html>

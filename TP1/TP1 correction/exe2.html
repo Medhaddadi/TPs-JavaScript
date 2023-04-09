@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>EXERCICE2TP1</title>
+  </head>
+  <style>
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=number], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.button{
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+  <body>
+    <div>
+
+    <label for="nom">NOM</label>
+    <input type="text" id="nom">
+    <label for="prenom">PRENOM</label>
+    <input type="text" id="prenom">
+    <label for="poids">POIDS</label>
+    <input type="number" id="poids">
+    <label for="genre">GENRE</label>
+    <select  id="genre">
+       <option value="feminin">feminin</option>
+       <option value="masculin">masculin</option>
+    </select>
+    <label for="taille">TAILEE</label>
+    <input type="number" id="taille"><br>
+    <button  class="button" onclick="msg()">Click me</button>
+
+    </div>
+    <h3 id="id"></h3>
+    <script>
+      function msg(){
+     //<!-- on recupere ici les parametres -->
+     var nom=document.getElementById('nom').value
+     var prenom =document.getElementById('prenom').value
+     var poids=document.getElementById('poids').value
+     var genre=document.getElementById('genre').value
+     var taille=document.getElementById('taille').value
+     // ici on calcule imc
+     var imc=poids/(taille**2)
+     //ici on affiche le resultat
+     if(imc>=16.5 && imc<18.5){
+       if(genre=="feminin"){
+         document.getElementById('id').innerHTML="Bonjour Mlle "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant une corpulence maigre dont l'imc est entre 16.5 et 18.5!"
+       }
+       else{
+         document.getElementById('id').innerHTML="Bonjour Mr "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant une corpulence maigre dont l'imc est entre 16.5 et 18.5!"
+       }
+     }else if(imc>=18.5 && imc<25){
+            if(genre=="feminin"){
+              document.getElementById('id').innerHTML="Bonjour Mlle "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant une corpulence normale dont l'imc est entre 18.5 et 25!"
+            }
+            else{
+              document.getElementById('id').innerHTML="Bonjour Mr "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant une corpulence normale dont l'imc est entre 18.5 et 25!"
+            }
+        }else if(imc>=25 && imc<30){
+               if(genre=="feminin"){
+                 document.getElementById('id').innerHTML="Bonjour Mlle "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant un Surpoids dont l'imc est entre 25 et 30!"
+               }
+               else{
+                 document.getElementById('id').innerHTML="Bonjour Mr "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant un Surpoids dont l'imc est entre 25 et 30!"
+               }
+             }else{
+               if(genre=="feminin"){
+                 document.getElementById('id').innerHTML="Bonjour Mlle "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant une obésité dont l'imc est plus grand que 30!"
+               }
+               else{
+                 document.getElementById('id').innerHTML="Bonjour Mr "+nom+" "+prenom+" votre imc est : "+imc+"<br>Vous faites partie des gens ayant une obésité dont l'imc est plus grand que 30!"
+               }
+             }
+
+
+
+
+
+
+      }
+    </script>
+  </body>
+</html>

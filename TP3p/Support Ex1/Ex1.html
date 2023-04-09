@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quiz JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        #quiz {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: bold;
+            font-style: italic;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        ol {
+            font-size: 17px;
+            margin-left: 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        li:hover {
+            cursor: pointer;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .correct {
+            border: 2px solid #0e7137;
+            color: #139d4d;
+            background-color: #d4edda;
+        }
+
+        .incorrect {
+            border: 2px solid #e74c3c;
+            color: #e74c3c;
+            background-color: #f8d7da;
+        }
+
+        .result {
+            display: block;
+            margin: auto;
+            width: 50%;
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            font-style: italic;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #resultat {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="quiz">
+        <h2>Quel mot clé créer un objet ?</h2>
+        <ol id="quiz-response">
+            <li onclick="validate(this)">instance</li>
+            <li onclick="validate(this)">new</li>
+            <li onclick="validate(this)">this</li>
+            <li onclick="validate(this)">add</li>
+            <li onclick="validate(this)">append</li>
+        </ol>
+    </div>
+    <script src="scriptEx3.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <title>Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        #quiz {
+            background-color: #fff;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+
+        h1 {
+            font-size: 2em;
+            text-align: center;
+            margin: 5px;
+            color: #144581;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #b04171;
+        }
+
+        button {
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        #score {
+            text-align: center;
+            font-size: 1.5em;
+            margin: 10px 0px;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #falseRes {
+            font-size: 1.2em;
+            padding-inline-start: 0px;
+            list-style-type: none;
+            margin-bottom: 5px;
+            color: #fc0808;
+            font-weight: bold;
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        #falseRes li {
+            color: #d60a0a;
+            margin-bottom: 5px;
+            font-size: 0.8em;
+        }
+
+        #falseRes li::before {
+            content: "❌";
+            margin-right: 5px;
+        }
+
+        #falseRes::after {
+            content: "";
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        #score {
+            color: #048317;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="quiz">
+        <h1>Quiz sur les capitales</h1>
+        <h2 id="question">Ici vous allez inserer la question</h2>
+        <div>
+            <button id="choix1" onclick="checkAnswer(this)">Ici reponse 1</button>
+            <button id="choix2" onclick="checkAnswer(this)">Ici reponse 2</button>
+            <button id="choix3" onclick="checkAnswer(this)">Ici reponse 3</button>
+        </div>
+        <p>Score du joueur : <span id="score">0</span></p>
+        <ul id="falseRes" hidden><br>
+        </ul>
+
+        <button onclick="reset()">Réinitialiser</button>
+    </div>
+
+    <script src="scriptEx3.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exo 1</title>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.css">
+</head>
+<body class="container">
+<div class="form-check bg-danger text-white">
+    <div class="form-group m-1">
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" id="nom">
+    </div>
+    <div class="form-group">
+        <label for="prenom">Prenom</label>
+        <input type="text" name="prenom" id="prenom">
+    </div>
+    <div class="form-group">
+        <label for="genre">Genre</label>
+        <select name="genre" id="genre">
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="taille">Taille</label>
+        <input type="text" name="taille" id="taille">
+    </div>
+    <div class="form-group">
+        <label for="pois">Pois</label>
+        <input type="text" name="pois" id="pois">
+    </div>
+    <button class="btn btn-success" id="IMC" onclick="showIMC()">IMC </button>
+
+</div>
+
+</body>
+<script src="../bootstrap/js/bootstrap.js"></script>
+<script src="index.js"></script>
+</html>

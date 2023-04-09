@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>gaiss the numer </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+<!--    cdn bootsatrap 5-->
+
+</head>
+<body>
+  <div class="container m-auto p-3 border-2 border-3 text-center" id="result">
+      <select class="rounded-4" id="niveau">
+          <option value="facile"> Facile</option>
+          <option value="moyen"> Moyen</option>
+          <option value="difficile"> Difficile</option>
+      </select>
+      <label class="col-form-label">
+          Votre proposition :
+          <input type="text" class="form-check" id="userNumber">
+      </label>
+      <button class="btn btn-success btn-lg" onclick="main()"> Check </button>
+      <div class="alert-danger mt-3 rounded-4 " >
+          <p class="text-center" id="textResult"></p>
+      </div>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="index.js"></script>
+</html>

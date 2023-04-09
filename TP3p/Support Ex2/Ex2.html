@@ -1,0 +1,102 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #eee;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        td:last-child {
+            width: 70px;
+            /* Largeur fixe pour la colonne qui contient les boutons */
+        }
+
+        .deleteBtn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 8px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .deleteBtn:hover {
+            background-color: #d32f2f;
+        }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="cars">
+        <tr>
+            <th>Marque</th>
+            <th>Modèle</th>
+            <th>Prix</th>
+            <th>Action</th>
+        </tr>
+        <tr>
+            <td>Toyota</td>
+            <td>Corolla</td>
+            <td>100000 DH</td>
+            <td><button class="deleteBtn" onclick="deleteCar(this)">Supprimer</button></td>
+        </tr>
+        <tr>
+            <td>Renault</td>
+            <td>Clio</td>
+            <td>120000 DH</td>
+            <td><button class="deleteBtn" onclick="deleteCar(this)">Supprimer</button></td>
+        </tr>
+        <tr>
+            <td>Peugeot</td>
+            <td>208</td>
+            <td>140000 DH</td>
+            <td><button class="deleteBtn" onclick="deleteCar(this)">Supprimer</button></td>
+        </tr>
+        <tr>
+            <td>BMW</td>
+            <td>Série 3</td>
+            <td>300000 DH</td>
+            <td><button class="deleteBtn" onclick="deleteCar(this)">Supprimer</button></td>
+        </tr>
+        <tr>
+            <td>Mercedes-Benz</td>
+            <td>Classe C</td>
+            <td>350000 DH</td>
+            <td><button class="deleteBtn" onclick="deleteCar(this)">Supprimer</button></td>
+        </tr>
+    </table>
+
+    <script src="Ex2.js"></script>
+</body>
+
+</html>
