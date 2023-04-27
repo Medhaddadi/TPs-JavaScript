@@ -3,7 +3,7 @@
 
 <head>
     <title>Inscription étudiant</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -25,8 +25,8 @@
         </div>
 
         <div class="form-field">
-            <label for="filiere" id="test1">Filière :</label>
-            <input type="text" id="filiere" name="filiere" value="test" > test 222
+            <label for="filiere">Filière :</label>
+            <input type="text" id="filiere" name="filiere"  >
         </div>
 
         <div class="form-field">
@@ -39,10 +39,10 @@
             <input type="tel" id="tel" name="tel">
         </div>
 
-        <div name="divNote" class="form-field single-line">
+        <div name="divNote" class="form-field single-line" id ="divNote">
             <label for="note1">Note :</label>
-            <input type="number" name="note" id="note1">
-            <button type="button" id="ajouterNote" disabled>+</button>
+            <input type="number" name="note" id="note1" class="note">
+            <button type="button" class="ajouterNote" id ="ajouterNote" disabled>+</button>
         </div>
 
         <div id="divMoyenne" class="form-field single-line">
@@ -88,5 +88,5 @@
             </tr>
         </tbody>
     </table>
-    <script src="script.js"></script>
+    <script src="js/validationChampes.js"></script>
 </body>
