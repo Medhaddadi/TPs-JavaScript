@@ -5,7 +5,6 @@
 const NOMBRE_MAXIMALE_NOTE = 4;
 
 
-
 /*
 * declaration of the class Etudiant :
 * */
@@ -14,25 +13,37 @@ class Etudiant {
     #Prenom = "";
     #DateNaissance = "";
     #Filiere = "";
+    #Email = "";
     #Tel = "";
     #Note = [];
     #Moyenne = 0.0;
 
-    constructor(Nom, Prenom, DateNaissance, Filiere, Tel, Note) {
+    get Email() {
+        return this.#Email;
+    }
+
+    set Email(value) {
+        this.#Email = value;
+    }
+
+    constructor(Nom, Prenom, DateNaissance, Filiere, email, Tel, Note) {
         this.#Nom = Nom;
         this.#Prenom = Prenom;
         this.#DateNaissance = DateNaissance;
         this.#Filiere = Filiere;
+        this.#Email = email;
         this.#Tel = Tel;
+
         this.#Note = Note;
         this.#Moyenne = (() => {
             let sum = 0;
             this.#Note.map((i) => {
-                sum += i;
+                sum += parseFloat(i);
             });
             return sum / this.#Note.length;
         })();
     }
+
 
     // getter and setter
     get Nom() {
@@ -119,7 +130,6 @@ class Etudiant {
         let d = new Date(val);
         let date = Date.now()
         let age = (date - d) / (1000 * 60 * 60 * 24 * 365);
-        console.log(age);
         if (age > 18) return 1; else return 0;
     }
 
@@ -145,7 +155,6 @@ class Etudiant {
 // add event listener to the form to validate the inputs
 nom.addEventListener("keyup", function (e) {
     if (Etudiant.NomPrenomValid(e.target.value)) e.target.className = "success"; else e.target.className = "failed";
-    console.log(e.target.value);
 });
 prenom.addEventListener("input", function (e) {
     if (Etudiant.NomPrenomValid(e.target.value)) e.target.className = "success"; else e.target.className = "failed";
@@ -167,7 +176,7 @@ filiere.addEventListener("input", function (e) {
 
 
 // function validate all inputs note and calculate the moyenne
-function validateNotes(){
+function validateNotes() {
     let noteInputs = document.getElementsByClassName("note");
     for (let i of noteInputs) {
         i.addEventListener("input", function (e) {
@@ -185,6 +194,7 @@ function validateNotes(){
         });
     }
 }
+
 validateNotes();
 
 // disable the property copy and paste for all inputs
@@ -248,6 +258,7 @@ function ajouterChampNote(e) {
 function ajouterBtnDeleteNote(e) {
     let btnDelete = document.createElement("button");
     btnDelete.innerText = "X";
+    btnDelete.className = "btnDeleteInputNote";
     btnDelete.style.background = "red";
     btnDelete.addEventListener("click", deleteNoteNodeInput);
     e.after(btnDelete);
@@ -286,12 +297,20 @@ function deleteNoteNodeInput(e) {
 * * calculate the moyenne and change the value of the input moyenne
 *  * also this funcation used to help obtimize the code from the repetition of the code
  */
-function calculateAndChangeMoyeene(){
+function calculateAndChangeMoyeene() {
     let notes = divNote.getElementsByTagName("input");
     let moyenne = 0;
     for (let i of notes) moyenne += parseInt(i.value);
     moyenne /= notes.length;
     document.getElementById("moyenne").value = moyenne;
+}
+
+//get all notes input
+function getNotes() {
+    let notes = divNote.getElementsByTagName("input");
+    let notesArray = [];
+    for (let i of notes) notesArray.push(i.value);
+    return notesArray;
 }
 
 /*
@@ -303,18 +322,13 @@ function validateData() {
         Nom: nom.value,
         Prenom: prenom.value,
         DateNaissance: dateNaissance.value,
+        Email: email.value,
         Filiere: filiere.value,
         Tel: tel.value,
-        Note: (
-            function () {
-                let notes = [];
-                let inputsNotes = document.getElementsByClassName("note");
-                for (let i of inputsNotes) notes.push(parseInt(i.value));
-                return notes;
-            }
-        )(),
-        moyenne: moyenne.value
+        Note: getNotes()
     }
+    let etudiant = new Etudiant(Etu.Nom, Etu.Prenom, Etu.DateNaissance, Etu.Filiere, Etu.Email, Etu.Tel, Etu.Note);
+    console.log(etudiant);
     let errorMessage = "";
     let errorCode = 0;
     for (let key in Etu) {
@@ -323,51 +337,144 @@ function validateData() {
                 if (!Etudiant.NomPrenomValid(Etu[key])) {
                     errorMessage += "Nom should be more than 2 letters\n";
                     nom.className = "failed";
+                    errorCode++;
                 }
                 break;
             case "Prenom":
                 if (!Etudiant.NomPrenomValid(Etu[key])) {
                     errorMessage += "Prenom should be more than 2 letters\n";
                     prenom.className = "failed";
+                    errorCode++;
                 }
                 break;
             case "DateNaissance":
                 if (!Etudiant.DateValid(Etu[key])) {
                     errorMessage += "DateNaissance should be more than 18 years\n";
                     dateNaissance.className = "failed";
+                    errorCode++;
                 }
                 break;
             case "Filiere":
                 if (!Etudiant.FiliereValid(Etu[key])) {
                     errorMessage += "Filiere should be more than 3 letters \n";
                     filiere.className = "failed";
+                    errorCode++;
                 }
                 break;
             case "Tel":
                 if (!Etudiant.TelValid(Etu[key])) {
                     errorMessage += "Tel should be 10 numbers \n";
                     tel.className = "failed"
+                    errorCode++;
                 }
                 break;
             case "Note":
                 for (let i of Etu[key]) {
                     if (!Etudiant.NoteValid(i)) {
                         errorMessage += "Note should be between 0 and 20 \n";
+                        errorCode++;
                         break;
                     }
                 }
                 break;
-            default: {
-                errorCode = 1;
-            }
-                break;
         }
     }
     if (errorCode === 0) {
+        ajouterEtudiant(etudiant);
         alert("Student added successfully");
     } else {
         alert(errorMessage);
     }
+}
+
+function ModifierEtudiant(e) {
+    /*get all the champ of the row */
+    let tr = e.target.parentElement.parentElement;
+    let tabElements = tr.getElementsByTagName("td");
+    //Nom, Prenom, DateNaissance, Filiere, email, Tel, Note
+
+    let etuidant = new Etudiant(tabElements[0].innerText, tabElements[1].innerText, tabElements[2].innerText, tabElements[3].innerText, tabElements[4].innerText, tabElements[5].innerText, tabElements[6].innerText.split(","));
+    nom.value = etuidant.Nom;
+    prenom.value = etuidant.Prenom;
+    dateNaissance.value = etuidant.DateNaissance;
+    filiere.value = etuidant.Filiere;
+    email.value = etuidant.Email;
+    tel.value = etuidant.Tel;
+    let notes = divNote.getElementsByTagName("input");
+    for (let i = 0; i < etuidant.Note.length; i++) {
+        ajouterNote.click();
+    }
+    for (let i = 0; i < notes.length; i++) {
+        notes[i].value = etuidant.Note[i];
+    }
+}
+
+// function to add etudiant to the table
+function ajouterEtudiant(et) {
+    console.log(et);
+    let tbody = tableEtudiants.getElementsByTagName("tbody")[0];
+    let tr = document.createElement("tr");
+    let tdNom = document.createElement("td");
+    tdNom.innerText = et.Nom;
+    let tdPrenom = document.createElement("td");
+    tdPrenom.innerText = et.Prenom;
+    let tdDateNaissance = document.createElement("td");
+    tdDateNaissance.innerText = et.DateNaissance;
+    let tdFiliere = document.createElement("td");
+    tdFiliere.innerText = et.Filiere;
+    let tdEmail = document.createElement("td");
+    tdEmail.innerText = et.Email;
+    let tdTel = document.createElement("td");
+    tdTel.innerText = et.Tel;
+    let tdNote = document.createElement("td");
+    tdNote.innerText = et.Note;
+    let tdMoyenne = document.createElement("td");
+    tdMoyenne.innerText = et.Moyenne;
+    //create the delete button
+    let tdAction = document.createElement("td");
+    let btnModifier = document.createElement("button");
+    btnModifier.innerText = "Modifier";
+    btnModifier.className = "modifier";
+    btnModifier.style.marginRight = "5px";
+    btnModifier.style.backgroundColor = "green";
+    btnModifier.addEventListener("click", ModifierEtudiant);
+    let btnDelete = document.createElement("button");
+    btnDelete.innerText = "X";
+    btnDelete.className = "supprimer";
+    btnDelete.style.backgroundColor = "red";
+    btnDelete.addEventListener("click", function (e) {
+        e.target.parentElement.parentElement.remove();
+    });
+    tdAction.appendChild(btnModifier);
+    tdAction.appendChild(btnDelete);
+    tr.append(tdNom);
+    tr.append(tdPrenom);
+    tr.append(tdDateNaissance);
+    tr.append(tdFiliere);
+    tr.append(tdEmail);
+    tr.append(tdTel);
+    tr.append(tdNote);
+    tr.append(tdMoyenne);
+    tr.append(tdAction);
+    tbody.appendChild(tr);
+    resetForm();
+}
+
+// function to reset the form
+function resetForm() {
+    nom.value = "";
+    prenom.value = "";
+    dateNaissance.value = "";
+    filiere.value = "";
+    email.value = "";
+    tel.value = "";
+    let btnDeleteNote = divNote.getElementsByClassName("btnDeleteInputNote").remove();
+    let btnAjouterNote = document.createElement("button");
+    btnAjouterNote.innerText = "+";
+    btnAjouterNote.id = "ajouterNote";
+    btnAjouterNote.addEventListener("click", ajouterChampNote);
+    document.getElementById("divNote").lastElementChild.after(btnAjouterNote);
+
 }
 
 /*
