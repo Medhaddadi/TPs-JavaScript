@@ -3,7 +3,15 @@
 *  - NOMBRE_MAXIMALE_NOTE : the number of note max to 4 to be easy to change it in the future
 * */
 const NOMBRE_MAXIMALE_NOTE = 4;
+let BTN_AJOUTER_NOTE_EXIST = 1;
 
+
+// delete all the student from the table
+//get by class name e all the supprimer btn
+let supprimerBtn = document.getElementsByClassName("supprimer");
+for (let i of supprimerBtn) {
+    i.parentElement.parentElement.remove();
+}
 
 /*
 * declaration of the class Etudiant :
@@ -185,11 +193,13 @@ function validateNotes() {
                 // we call the function to calculate the moyenne evrey time we change the note by a valid value
                 calculateAndChangeMoyeene();
                 // enable the button ajouter
-                document.getElementById("ajouterNote").disabled = false;
+                if (BTN_AJOUTER_NOTE_EXIST===1)
+                    document.getElementById("ajouterNote").disabled = false;
             } else {
                 e.target.className = "failed";
                 // disable the button ajouter
-                document.getElementById("ajouterNote").disabled = true;
+                if (BTN_AJOUTER_NOTE_EXIST===1)
+                    document.getElementById("ajouterNote").disabled = true;
             }
         });
     }
@@ -244,7 +254,6 @@ function ajouterChampNote(e) {
         validateNotes();
         nbActuelNotes++;
     } else {
-        alert("Vous avez atteint le nombre maximale de notes");
         e.target.remove();
     }
 }
@@ -262,6 +271,7 @@ function ajouterBtnDeleteNote(e) {
     btnDelete.style.background = "red";
     btnDelete.addEventListener("click", deleteNoteNodeInput);
     e.after(btnDelete);
+    AJOUTER_BTN_ADD_NOTE();
 }
 
 
@@ -271,6 +281,16 @@ function ajouterBtnDeleteNote(e) {
 ajouterBtnDeleteNote(document.getElementById("divNote").firstElementChild.nextElementSibling);
 ajouterNote.addEventListener("click", ajouterChampNote);
 
+function AJOUTER_BTN_ADD_NOTE(){
+    if (BTN_AJOUTER_NOTE_EXIST === 0 ){
+        let btnAjouterNote = document.createElement("button");
+        btnAjouterNote.innerText = "+";
+        btnAjouterNote.id = "ajouterNote";
+        btnAjouterNote.addEventListener("click", ajouterChampNote);
+        document.getElementById("divNote").lastElementChild.after(btnAjouterNote);
+        BTN_AJOUTER_NOTE_EXIST = 1;
+    }
+}
 /*
 * function deleteNoteNodeInput:
 * * delete the input note and the btn delete
@@ -283,13 +303,7 @@ function deleteNoteNodeInput(e) {
         e.target.remove();
         nbActuelNotes--;
     }
-    if (nbActuelNotes < NOMBRE_MAXIMALE_NOTE) {
-        let btnAjouterNote = document.createElement("button");
-        btnAjouterNote.innerText = "+";
-        btnAjouterNote.id = "ajouterNote";
-        btnAjouterNote.addEventListener("click", ajouterChampNote);
-        document.getElementById("divNote").lastElementChild.after(btnAjouterNote);
-    }
+    AJOUTER_BTN_ADD_NOTE();
 }
 
 /*
@@ -313,9 +327,13 @@ function getNotes() {
     return notesArray;
 }
 
+
+
 /*
 * Know we move next step : validation of the form on submit
  */
+let MODEFIED_BUTTON_WAS_CLICED = 0;
+let EtudiantToModefier = "";
 
 function validateData() {
     let Etu = {
@@ -328,7 +346,6 @@ function validateData() {
         Note: getNotes()
     }
     let etudiant = new Etudiant(Etu.Nom, Etu.Prenom, Etu.DateNaissance, Etu.Filiere, Etu.Email, Etu.Tel, Etu.Note);
-    console.log(etudiant);
     let errorMessage = "";
     let errorCode = 0;
     for (let key in Etu) {
@@ -388,9 +405,11 @@ function validateData() {
 }
 
 function ModifierEtudiant(e) {
+    MODEFIED_BUTTON_WAS_CLICED = 1
     /*get all the champ of the row */
     let tr = e.target.parentElement.parentElement;
     let tabElements = tr.getElementsByTagName("td");
+    let EtudientModify = tr;
     //Nom, Prenom, DateNaissance, Filiere, email, Tel, Note
 
     let etuidant = new Etudiant(tabElements[0].innerText, tabElements[1].innerText, tabElements[2].innerText, tabElements[3].innerText, tabElements[4].innerText, tabElements[5].innerText, tabElements[6].innerText.split(","));
@@ -401,63 +420,94 @@ function ModifierEtudiant(e) {
     email.value = etuidant.Email;
     tel.value = etuidant.Tel;
     let notes = divNote.getElementsByTagName("input");
-    for (let i = 0; i < etuidant.Note.length; i++) {
-        ajouterNote.click();
+    // delete the input notes that we don't need
+    while (notes.length > etuidant.Note.length) {
+        notes[notes.length - 1].previousElementSibling.remove();
+        notes[notes.length - 1].remove();
+        nbActuelNotes--;
+        AJOUTER_BTN_ADD_NOTE();
     }
+    // add the input notes that we need
+    while (notes.length < etuidant.Note.length) {
+        AJOUTER_BTN_ADD_NOTE();
+        ajouterChampNote(ajouterNote);
+    }
+
+    // add the notes to the input notes
     for (let i = 0; i < notes.length; i++) {
         notes[i].value = etuidant.Note[i];
     }
+
+    submitBtn.value = "Modifier";
+    EtudiantToModefier = EtudientModify;
 }
 
 // function to add etudiant to the table
 function ajouterEtudiant(et) {
-    console.log(et);
-    let tbody = tableEtudiants.getElementsByTagName("tbody")[0];
-    let tr = document.createElement("tr");
-    let tdNom = document.createElement("td");
-    tdNom.innerText = et.Nom;
-    let tdPrenom = document.createElement("td");
-    tdPrenom.innerText = et.Prenom;
-    let tdDateNaissance = document.createElement("td");
-    tdDateNaissance.innerText = et.DateNaissance;
-    let tdFiliere = document.createElement("td");
-    tdFiliere.innerText = et.Filiere;
-    let tdEmail = document.createElement("td");
-    tdEmail.innerText = et.Email;
-    let tdTel = document.createElement("td");
-    tdTel.innerText = et.Tel;
-    let tdNote = document.createElement("td");
-    tdNote.innerText = et.Note;
-    let tdMoyenne = document.createElement("td");
-    tdMoyenne.innerText = et.Moyenne;
-    //create the delete button
-    let tdAction = document.createElement("td");
-    let btnModifier = document.createElement("button");
-    btnModifier.innerText = "Modifier";
-    btnModifier.className = "modifier";
-    btnModifier.style.marginRight = "5px";
-    btnModifier.style.backgroundColor = "green";
-    btnModifier.addEventListener("click", ModifierEtudiant);
-    let btnDelete = document.createElement("button");
-    btnDelete.innerText = "X";
-    btnDelete.className = "supprimer";
-    btnDelete.style.backgroundColor = "red";
-    btnDelete.addEventListener("click", function (e) {
-        e.target.parentElement.parentElement.remove();
-    });
-    tdAction.appendChild(btnModifier);
-    tdAction.appendChild(btnDelete);
-    tr.append(tdNom);
-    tr.append(tdPrenom);
-    tr.append(tdDateNaissance);
-    tr.append(tdFiliere);
-    tr.append(tdEmail);
-    tr.append(tdTel);
-    tr.append(tdNote);
-    tr.append(tdMoyenne);
-    tr.append(tdAction);
-    tbody.appendChild(tr);
-    resetForm();
+    if (MODEFIED_BUTTON_WAS_CLICED === 0) {
+        let tbody = tableEtudiants.getElementsByTagName("tbody")[0];
+        let tr = document.createElement("tr");
+        let tdNom = document.createElement("td");
+        tdNom.innerText = et.Nom;
+        let tdPrenom = document.createElement("td");
+        tdPrenom.innerText = et.Prenom;
+        let tdDateNaissance = document.createElement("td");
+        tdDateNaissance.innerText = et.DateNaissance;
+        let tdFiliere = document.createElement("td");
+        tdFiliere.innerText = et.Filiere;
+        let tdEmail = document.createElement("td");
+        tdEmail.innerText = et.Email;
+        let tdTel = document.createElement("td");
+        tdTel.innerText = et.Tel;
+        let tdNote = document.createElement("td");
+        tdNote.innerText = et.Note;
+        let tdMoyenne = document.createElement("td");
+        tdMoyenne.innerText = et.Moyenne;
+        //create the delete button
+        let tdAction = document.createElement("td");
+        let btnModifier = document.createElement("button");
+        btnModifier.innerText = "Modifier";
+        btnModifier.className = "modifier";
+        btnModifier.style.marginRight = "5px";
+        btnModifier.style.backgroundColor = "green";
+        btnModifier.addEventListener("click", ModifierEtudiant);
+        let btnDelete = document.createElement("button");
+        btnDelete.innerText = "X";
+        btnDelete.className = "supprimer";
+        btnDelete.style.backgroundColor = "red";
+        btnDelete.addEventListener("click", function (e) {
+            e.target.parentElement.parentElement.remove();
+        });
+        tdAction.appendChild(btnModifier);
+        tdAction.appendChild(btnDelete);
+        tr.append(tdNom);
+        tr.append(tdPrenom);
+        tr.append(tdDateNaissance);
+        tr.append(tdFiliere);
+        tr.append(tdEmail);
+        tr.append(tdTel);
+        tr.append(tdNote);
+        tr.append(tdMoyenne);
+        tr.append(tdAction);
+        tbody.appendChild(tr);
+        resetForm();
+    } else {
+        console.log("modefied was clicked");
+        console.log(EtudiantToModefier);
+        EtudiantToModefier= EtudiantToModefier.childNodes;
+        console.log(EtudiantToModefier);
+        EtudiantToModefier[0].innerText = et.Nom;
+        EtudiantToModefier[1].innerText = et.Prenom;
+        EtudiantToModefier[2].innerText = et.DateNaissance;
+        EtudiantToModefier[3].innerText = et.Filiere;
+        EtudiantToModefier[4].innerText = et.Email;
+        EtudiantToModefier[5].innerText = et.Tel;
+        EtudiantToModefier[6].innerText = et.Note+"";
+        EtudiantToModefier[7].innerText = et.Moyenne+"";
+        resetForm();
+        MODEFIED_BUTTON_WAS_CLICED = 0;
+    }
+
 }
 
 // function to reset the form
@@ -468,13 +518,11 @@ function resetForm() {
     filiere.value = "";
     email.value = "";
     tel.value = "";
-    let btnDeleteNote = divNote.getElementsByClassName("btnDeleteInputNote").remove();
-    let btnAjouterNote = document.createElement("button");
-    btnAjouterNote.innerText = "+";
-    btnAjouterNote.id = "ajouterNote";
-    btnAjouterNote.addEventListener("click", ajouterChampNote);
-    document.getElementById("divNote").lastElementChild.after(btnAjouterNote);
-
+    moyenne.value = "";
+    let notes = divNote.getElementsByTagName("input");
+    for (let i = 0; i < notes.length; i++) {
+        notes[i].value = "";
+    }
 }
 
 /*
